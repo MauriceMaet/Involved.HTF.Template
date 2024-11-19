@@ -15,20 +15,15 @@ class Program
 {
     public static async Task Main(string[] args)
     {
-        // Create an instance of HackTheFutureClient
         var client = new HackTheFutureClient();
 
-        // Login to get the token
         await client.Login();
 
-        // Define the API route for team A and B
         string apiRoute = "/api/a/medium/puzzle";
 
-        // Get the data (team A and team B) from the specified API endpoints
         string teamAJson = await client.GetData(apiRoute, "teamA");
         string teamBJson = await client.GetData(apiRoute, "teamB");
 
-        // Deserialize the JSON data into Alien lists for team A and team B
         List<Alien> teamA = JsonConvert.DeserializeObject<List<Alien>>(teamAJson);
         List<Alien> teamB = JsonConvert.DeserializeObject<List<Alien>>(teamBJson);
 
@@ -47,7 +42,6 @@ class Program
 
             Console.WriteLine($"Alien A (Health: {alienA.Health}, Speed: {alienA.Speed}) vs Alien B (Health: {alienB.Health}, Speed: {alienB.Speed})");
 
-            // Determine who attacks first
             if (alienA.Speed > alienB.Speed || (alienA.Speed == alienB.Speed))
             {
                 Console.WriteLine("Team A attacks first!");
@@ -67,12 +61,10 @@ class Program
                 }
             }
 
-            // Check if aliens are defeated
             if (alienA.Health <= 0) aIndex++;
             if (alienB.Health <= 0) bIndex++;
         }
 
-        // Determine the winning team
         if (aIndex < teamA.Count)
         {
             Console.WriteLine($"Team A wins with total health: {CalculateTotalHealth(teamA, aIndex)}");

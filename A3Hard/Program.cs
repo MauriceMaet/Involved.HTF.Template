@@ -7,25 +7,19 @@ class Program
 {
     static async Task Main()
     {
-        // Create an instance of HackTheFutureClient
         var client = new HackTheFutureClient();
 
-        // Log in to authenticate and get the token
         await client.Login();
 
-        // Define the API route and field name for the data (you can modify these as necessary)
         string apiRoute = "/api/a/hard/puzzle";
-        string fieldname = "quatralianNumbers"; // assuming the field that holds the list of quatralian numbers in the response
+        string fieldname = "quatralianNumbers";
 
-        // Retrieve the quatralian numbers using GetData
         string quatralianJson = await client.GetData(apiRoute, fieldname);
 
-        // Deserialize the JSON array into a list of quatralian numbers
         var quatralianNumbers = DeserializeQuatralianNumbers(quatralianJson);
 
         int totalDecimal = 0;
 
-        // Process each quatralian number
         foreach (var quatralian in quatralianNumbers)
         {
             totalDecimal += ConvertToDecimal(quatralian);
@@ -39,8 +33,6 @@ class Program
 
     static List<string> DeserializeQuatralianNumbers(string json)
     {
-        // Deserialize the JSON string to a List of strings (Quatralian numbers)
-        // Ensure you have the necessary deserialization logic depending on your actual JSON format
         return Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(json);
     }
 

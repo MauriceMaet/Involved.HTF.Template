@@ -55,14 +55,12 @@ class Program
         {
             string symbol = ch.ToString();
 
-            // Check if the character exists in the dictionary
             if (alphabet.ContainsKey(symbol))
             {
                 decoded += alphabet[symbol];
             }
             else
             {
-                // Preserve spaces and punctuation
                 decoded += symbol;
             }
         }
