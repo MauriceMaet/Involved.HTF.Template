@@ -8,10 +8,18 @@ public class Program
 
         await client.Login();
 
-        string apiRoute = "/api/a/easy/puzzle";
-        var commands = await client.GetData(apiRoute, "commands");
+        Console.WriteLine($"Sample\n");
+        string apiRouteSample = "/api/a/easy/sample";
+        var sampleCommands = await client.GetData(apiRouteSample, "commands");
 
-        int result = ProcessCommands(commands);
+        int resultSample = ProcessCommands(sampleCommands);
+
+        Console.WriteLine("Puzzle\n");
+
+        string apiRoutePuzzle = "/api/a/easy/puzzle";
+        var puzzleCommands = await client.GetData(apiRoutePuzzle, "commands");
+
+        int resultPuzzle = ProcessCommands(puzzleCommands);
 
     }
 
@@ -50,7 +58,7 @@ public class Program
 
         Console.WriteLine($"Total Distance: {totalDistance}");
         Console.WriteLine($"Total Depth: {totalDepth}");
-        Console.WriteLine($"Result (Distance * Depth): {result}");
+        Console.WriteLine($"Result (Distance * Depth): {result}\n");
 
         return result;
     }
