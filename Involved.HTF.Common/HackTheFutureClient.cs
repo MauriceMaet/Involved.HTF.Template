@@ -67,6 +67,37 @@ public class HackTheFutureClient : HttpClient
             throw new Exception($"Error parsing JSON response: {ex.Message}", ex);
         }
     }
+    public async Task<HttpResponseMessage> PostData(string route, object payload)
+    {
+        try
+        {
+            HttpContent content;
+
+            content = new StringContent(
+                JsonSerializer.Serialize(payload),
+                System.Text.Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await PostAsync(route, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Error Content: " + errorContent);
+                throw new Exception($"Failed to post data to {route}. Status code: {response.StatusCode}. Response: {errorContent}");
+            }
+
+            Console.WriteLine($"Data posted successfully to {route}. Status code: {response.StatusCode}.");
+            return response;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error while posting data to {route}: {ex.Message}");
+            throw;
+        }
+    }
+
 
 
 
@@ -79,7 +110,3 @@ public class AuthResponse
     public string Token { get; set; }
 }
 
-public class ApiResponse
-{
-    public string Commands { get; set; }
-}

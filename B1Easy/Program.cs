@@ -34,8 +34,19 @@ class Program
 
             string decodedMessage = DecodeMessage(encodedMessage, alphabet);
 
-            Console.WriteLine("Encoded Message: " + encodedMessage);
-            Console.WriteLine("Decoded Message: " + decodedMessage);
+            Console.WriteLine("Encoded Message: " + encodedMessage + "\n");
+            Console.WriteLine("Decoded Message: " + decodedMessage + "\n");
+
+            try
+            {
+                string postRoute = "/api/b/easy/puzzle";
+                var response = await client.PostData(postRoute, decodedMessage);
+                Console.WriteLine("Post response: " + await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception postEx)
+            {
+                Console.WriteLine($"Failed to post decoded message: {postEx.Message}");
+            }
         }
         catch (Exception ex)
         {

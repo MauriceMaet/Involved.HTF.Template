@@ -29,6 +29,11 @@ class Program
 
         string quatralianSum = ConvertToQuatralian(totalDecimal);
         Console.WriteLine($"De som in Quatralianse notatie is: {quatralianSum}");
+
+        string postRoute = "/api/a/hard/puzzle";
+        var response = await client.PostData(postRoute, quatralianSum);
+
+        Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");
     }
 
     static List<string> DeserializeQuatralianNumbers(string json)

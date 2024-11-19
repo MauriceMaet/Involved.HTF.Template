@@ -20,7 +20,9 @@ public class Program
         var puzzleCommands = await client.GetData(apiRoutePuzzle, "commands");
 
         int resultPuzzle = ProcessCommands(puzzleCommands);
+        var response = await client.PostData(apiRoutePuzzle, resultPuzzle);
 
+        Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");
     }
 
     private static int ProcessCommands(string commands)

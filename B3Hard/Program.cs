@@ -13,17 +13,27 @@ class Program
         await client.Login();
 
         string apiRoute = "/api/b/hard/puzzle";
-        string fieldname = "maze"; 
+        string fieldname = "maze";
 
         string mazeJson = await client.GetData(apiRoute, fieldname);
 
         var mazeData = JsonConvert.DeserializeObject<List<List<string>>>(mazeJson);
-
         char[][] maze = ConvertToCharArray(mazeData);
 
         int result = SolveMaze(maze);
 
-        Console.WriteLine(result);
+        Console.WriteLine($"Maze solution steps: {result}");
+
+        try
+        {
+            string postRoute = "/api/b/hard/puzzle";
+            var response = await client.PostData(postRoute, result);
+            Console.WriteLine("Post response: " + await response.Content.ReadAsStringAsync());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to post result: {ex.Message}");
+        }
     }
 
     static char[][] ConvertToCharArray(List<List<string>> mazeData)

@@ -27,7 +27,6 @@ class Program
         List<Alien> teamA = JsonConvert.DeserializeObject<List<Alien>>(teamAJson);
         List<Alien> teamB = JsonConvert.DeserializeObject<List<Alien>>(teamBJson);
 
-        // Simulate the battle
         SimulateBattle(teamA, teamB);
     }
 
